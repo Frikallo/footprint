@@ -27,8 +27,9 @@ def Lookup(email):
                 for _ in text.split(' ')[1:]:
                     row = ["", _]
                     lookup_temp_result.append(row)
-    except:
+    except Exception as e:
         print("Error: Unable to resolve domain records. Please check your internet connection and try again.")
+        print(e)
         exit(0)
     return lookup_temp_result
 

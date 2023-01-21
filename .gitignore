@@ -2,3 +2,4 @@ venv/*
 upload
 dist/*
 build/*
+footprint_py.egg-info/*
