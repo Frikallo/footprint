@@ -1,9 +1,6 @@
 name: Publish On Tag
 
-on:
-  push:
-    tags:
-      - 'v*'
+on: push
 
 jobs:
   initial-checks:
