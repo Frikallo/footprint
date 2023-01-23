@@ -2,7 +2,7 @@ from io import open
 from setuptools import find_packages, setup
 setup(
     name='footprint-py',
-    version='v1.0',
+    version='v1.2',
     url='https://github.com/Frikallo/footprint',
     license='Apache',
     author='Noah Kay',

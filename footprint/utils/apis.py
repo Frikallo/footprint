@@ -1,8 +1,6 @@
-from footprint.utils.config import Config
 import requests
 import json
-import random
-import pkg_resources
+import socket
 
 def available_apis(apis, config):
     available_apis = []
@@ -61,11 +59,16 @@ def BreachDirectory(email, key):
     response = json.loads(content)
     return response
 
-if __name__ == "__main__":
-    apis = ["hunter", "haveibeenpwned", "shodan", "virustotal", "ipinfo"]
-    #config = Config('.conf')
-    #print(available_apis(apis, config))
-    #print(psbDumps("noahskay@icloud.com"))
-    #print(emailRep("noahskay@icloud.com"))
-    #print(hunter("f.last@noah.co.uk", "aa2fd4604b9d42177a1a74b13b25eff96a23eab6"))
-    #BreachDirectory("HI@GMAIL.COM", "6aaf3bd13amsh7eef51a55c30763p12db3ajsn9cbfd61e6ed0")
+def ipapi(email):
+    r = requests.Session()
+    splt = email.split('@')[1]
+    try:
+        ip = socket.gethostbyname(splt)
+    except:
+        return "No IP found"
+    url = "https://ipapi.co/" + ip + "/json/"
+    r.headers = {"Accept", "application/json"}
+    req = r.get(url)
+    content = req.content
+    response = json.loads(content)
+    return response

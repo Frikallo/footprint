@@ -11,15 +11,15 @@ from footprint.utils.config import Config
 from footprint.utils.apis import *
 
 def run():
-    printInit("footprint", "https://github.com/Frikallo/footprint", "v1.0")
+    printInit("footprint", "https://github.com/Frikallo/footprint", "v1.2")
 
     config = Config('.conf')
-    apis = ["hunter", "haveibeenpwned", "shodan", "virustotal", "ipinfo"]
+    apis = ["hunter", "breachdirectory", "emailrep"]
     def setAPI(api, key):
         if api in apis:
             config.set(api, key)
             config.save()
-            print(f"Set {api} key successfully")
+            print( "[" + colored("INFO","blue") + "]" + f" Set {api} key successfully")
             exit(0)
         else:
             print(f"\"{api}\" is not an accepted API")
@@ -46,10 +46,28 @@ def run():
     verified, disposable = validateEmail(email)
     socials = checkSocials(email)
     domainRecords = Lookup(email)
+    iapi = ipapi(email)
+    psbDump = psbDumps(email)
+    apiResults = {}
+    for configured_api in configured_apis:
+        if configured_api == "emailrep":
+            apiResults["emailrep"] = emailRep(email, config.get("emailrep"))
+        elif configured_api == "hunter":
+            apiResults["hunter"] = hunter(email, config.get("hunter"))
+        elif configured_api == "breachdirectory":
+            apiResults["breachdirectory"] = BreachDirectory(email, config.get("breachdirectory"))
     spinner.stop()
 
     printVerify(email, verified, disposable)
     printSocial(socials)
+    if "emailrep" in configured_apis:
+        printEmailRep(apiResults["emailrep"])
+    if "hunter" in configured_apis:
+        printHunter(apiResults["hunter"])
+    if "breachdirectory" in configured_apis:
+        printBreachDirectory(apiResults["breachdirectory"])
+    printPSB(psbDump)
+    printIPAPI(iapi)
     printLookup(domainRecords)
 
 if __name__ == '__main__':
