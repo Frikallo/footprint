@@ -1,6 +1,9 @@
 name: Publish On Tag
 
-on: push
+on:
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   initial-checks:
@@ -78,7 +81,7 @@ jobs:
         id: create_release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         with:
           tag_name: v${{ steps.get_module_version.outputs.version }}
           release_name: v${{ steps.get_module_version.outputs.version }}
@@ -89,7 +92,7 @@ jobs:
       - name: Upload Binary to Release
         uses: actions/upload-release-asset@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./dist/footprint-py-${{ steps.get_module_version.outputs.version }}-py2.py3-none-any.whl
