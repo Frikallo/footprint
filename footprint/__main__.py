@@ -10,6 +10,10 @@ from footprint.utils.printFuncs import *
 from footprint.utils.config import Config
 from footprint.utils.apis import *
 
+ERROR_CODE = 0
+OK_CODE = 1
+SUCCESS_CODE = 200
+
 def run():
     printInit("footprint", "https://github.com/Frikallo/footprint", "v1.2")
 
@@ -20,10 +24,10 @@ def run():
             config.set(api, key)
             config.save()
             print( "[" + colored("INFO","blue") + "]" + f" Set {api} key successfully")
-            exit(0)
+            exit(SUCCESS_CODE)
         else:
             print(f"\"{api}\" is not an accepted API")
-            exit(0)
+            exit(ERROR_CODE)
 
     args = sys.argv[1:]
     if "set" in args:
@@ -37,7 +41,7 @@ def run():
             print("Usage: footprint <email> OR footprint [options]")
             print("Options:")
             print("set <api> <key> - Set API key for a specific API")
-            exit(0)
+            exit(OK_CODE)
 
     spinner = Halo(spinner='dots', color='white')
     spinner.start()
@@ -69,6 +73,7 @@ def run():
     printPSB(psbDump)
     printIPAPI(iapi)
     printLookup(domainRecords)
+    exit(SUCCESS_CODE)
 
 if __name__ == '__main__':
     run()
