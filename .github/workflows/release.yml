@@ -35,12 +35,6 @@ jobs:
         run: |
           pip install -e .
           pytest
-      - name: Cleanup
-        run: |
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /opt/ghc
-          sudo rm -rf "/usr/local/share/boost"
-          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
   publish:
     needs: [initial-checks, test]
     runs-on: ubuntu-latest
