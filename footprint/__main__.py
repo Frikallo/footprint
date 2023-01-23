@@ -8,6 +8,7 @@ from footprint.utils.social import checkSocials
 from footprint.utils.lookup import Lookup
 from footprint.utils.printFuncs import *
 from footprint.utils.config import Config
+from footprint.utils.apis import *
 
 def run():
     printInit("footprint", "https://github.com/Frikallo/footprint", "v1.0")
@@ -41,6 +42,7 @@ def run():
     spinner = Halo(spinner='dots', color='white')
     spinner.start()
 
+    configured_apis = available_apis(apis, config)
     verified, disposable = validateEmail(email)
     socials = checkSocials(email)
     domainRecords = Lookup(email)

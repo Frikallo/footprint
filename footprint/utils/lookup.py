@@ -27,6 +27,10 @@ def Lookup(email):
                 for _ in text.split(' ')[1:]:
                     row = ["", _]
                     lookup_temp_result.append(row)
+        soarecords = dns.resolver.resolve(splt[1], 'SOA')
+        for rdata in soarecords:
+            row = ["SOA", str(rdata.mname).strip()]
+            lookup_temp_result.append(row)
     except Exception as e:
         print("Error: Unable to resolve domain records. Please check your internet connection and try again.")
         print(e)
@@ -34,5 +38,5 @@ def Lookup(email):
     return lookup_temp_result
 
 if __name__ == "__main__":
-    email = "noahskay@icloud.com"
+    email = "example@example.com"
     table(Lookup(email))
