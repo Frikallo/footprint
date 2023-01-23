@@ -34,7 +34,7 @@ jobs:
       - name: Run tests for Python ${{ matrix.python-version }} on ${{ matrix.os }}
         run: |
           pip install -e .
-          python -m unittest ./footprint/tests/test_footprint.py
+          python -m unittest footprint/tests/test_footprint.py
   publish:
     needs: [initial-checks, test]
     runs-on: ubuntu-latest
