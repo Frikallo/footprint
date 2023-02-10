@@ -14,7 +14,7 @@ ERROR_CODE = 1
 SUCCESS_CODE = 0
 
 def run():
-    printInit("footprint", "https://github.com/Frikallo/footprint", "v1.2")
+    printInit("footprint", "https://github.com/Frikallo/footprint", "v1.3")
 
     config = Config('.conf')
     apis = ["hunter", "breachdirectory", "emailrep"]

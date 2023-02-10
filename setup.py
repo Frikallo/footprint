@@ -2,11 +2,11 @@ from io import open
 from setuptools import find_packages, setup
 setup(
     name='footprint-py',
-    version='v1.25',
+    version='v1.3',
     url='https://github.com/Frikallo/footprint',
     license='Apache',
     author='Noah Kay',
-    author_email='contact@noahkay.dev',
+    author_email='noahkay13@gmail.com',
     description='A python OSINT tool to discover and analyze the digital footprint of a targets email or username across millions of sites.',
     long_description=''.join(open('README.md', encoding='utf-8').readlines()),
     long_description_content_type='text/markdown',
