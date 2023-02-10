@@ -1,7 +1,7 @@
 # footprint-py
 
 <p align="center">
-  <img src="https://github.com/Frikallo/footprint/examples/banner.png" width="500" title="footprint-banner">
+  <img src="https://github.com/Frikallo/footprint/blob/main/examples/banner.png" width="500" title="footprint-banner">
 </p>
 
 ## What is footprint-py
@@ -59,7 +59,7 @@ python -m footprint example@email.com
 
 ## Demo:
 <p align="center">
-  <img src="https://github.com/Frikallo/footprint/examples/demo.mp4" width="500" title="footprint">
+  <img src="https://github.com/Frikallo/footprint/blob/main/examples/demo.gif" width="500" title="footprint">
 </p>
 
 ## License
