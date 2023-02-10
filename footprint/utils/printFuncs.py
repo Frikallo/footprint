@@ -15,7 +15,7 @@ def catchPrint(func):
 @catchPrint
 def footPrint(*args, **kwargs):
     # get it??? footprint?? hahahaha
-    __builtins__.print(*args, **kwargs)
+    print(*args, **kwargs)
 
 def printVerify(email, verified, disposable):
     print(f"Target Email:", colored(email, "red", "on_white"))
