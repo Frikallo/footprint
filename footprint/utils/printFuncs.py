@@ -4,10 +4,19 @@ from footprint.utils.table import buildTable as table
 from datetime import datetime
 import os
 
+def catchPrint(func):
+    def wrapper(*args, **kwargs):
+        try:
+            func(*args, **kwargs)
+        except UnicodeEncodeError:
+            print("UnicodeEncodeError: Unable to print unicode characters")
+    return wrapper
+
+@catchPrint
 def printVerify(email, verified, disposable):
     print(f"Target Email:", colored(email, "red", "on_white"))
     if verified == True:
-        print("|-->", colored("Verified \N{check mark}", "green"))
+        print("|-->", colored("Verified \u2714", "green"))
     else:
         print("|-->", colored("Not Verified \u2718", "red"))
     if disposable == True:
@@ -24,6 +33,7 @@ def printLookup(lookup_result):
     print("\nLookup Results:")
     table(lookup_result)
 
+@catchPrint
 def printPSB(psb_result):
     print("\nPastebin Results:")
     if len(psb_result) == 0:
@@ -32,6 +42,7 @@ def printPSB(psb_result):
         for psb in psb_result:
             print("|- " + psb)
 
+@catchPrint
 def printHunter(hunter_result):
     print("\nHunter Results:")
     try:
@@ -43,13 +54,14 @@ def printHunter(hunter_result):
     except KeyError:
         print("|- Error getting results, may be rate limited.")
 
+@catchPrint
 def printBreachDirectory(breach_directory_result):
     print("\nBreach Directory Results:")
     results = []
     try:
         if breach_directory_result != None:
             for breach in breach_directory_result["result"]:
-                results.append("|- Sources:", colored("✔", "green"))
+                results.append("|- Sources:", colored("\u2714", "green"))
                 for source in breach["sources"]:
                     results.append("|-- "+source, colored("\u2714", "green"))
                 try:
@@ -74,6 +86,7 @@ def printBreachDirectory(breach_directory_result):
         for result in results:
             print(result)
 
+@catchPrint
 def printEmailRep(email_rep_result):
     print("\nEmailRep Results:")
     try:
@@ -91,6 +104,7 @@ def printEmailRep(email_rep_result):
     except KeyError:
         print(colored("|- Error getting results, may be rate limited.", "red"))
 
+@catchPrint
 def printIPAPI(ipapi_result):
     print("\nIPAPI Results:")
     try:
@@ -106,6 +120,7 @@ def printIPAPI(ipapi_result):
     except KeyError:
         print(colored("|- Error getting results, may be rate limited.", "red"))
 
+@catchPrint
 def printInit(name, githublink, version):
     date = datetime.now().strftime("%A, %d %b %Y")
     name = pyfiglet.figlet_format(f"    {name}")
