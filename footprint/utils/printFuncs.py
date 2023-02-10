@@ -4,11 +4,18 @@ from footprint.utils.table import buildTable as table
 from datetime import datetime
 import os
 
-def footprintPrint(string):
+def footprintPrint(*args, **kwargs):
     try:
-        print(string)
+        print(*args, **kwargs)
     except UnicodeEncodeError:
-        print(string.encode("iso-8859-1"))
+        printable = []
+        for arg in args:
+            printable.append(arg.encode("utf-8", "ignore").decode("utf-8"))
+        for kwarg in kwargs:
+            if kwarg == "encoding":
+                continue
+            kwargs[kwarg] = kwargs[kwarg].encode("utf-8", "ignore").decode("utf-8")
+        print(*printable, **kwargs)
 
 def printVerify(email, verified, disposable):
     print(f"Target Email:", colored(email, "red", "on_white"))
