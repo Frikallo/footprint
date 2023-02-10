@@ -7,7 +7,7 @@ import os
 def footprintPrint(*args, **kwargs):
     try:
         print(*args, **kwargs)
-    except UnicodeEncodeError:
+    except Exception:
         printable = []
         for arg in args:
             printable.append(arg.encode("utf-8", "ignore").decode("utf-8"))
