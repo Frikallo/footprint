@@ -7,13 +7,13 @@ import os
 def printVerify(email, verified, disposable):
     print(f"Target Email:", colored(email, "red", "on_white"))
     if verified == True:
-        print("|-->", colored("Verified ✔", "green"))
+        print("|-->", colored("Verified \N{check mark}", "green"))
     else:
-        print("|-->", colored("Not Verified ✘", "red"))
+        print("|-->", colored("Not Verified \u2718", "red"))
     if disposable == True:
-        print("|-->", colored("Disposable ✘", "red"))
+        print("|-->", colored("Disposable \u2718", "red"))
     else:
-        print("|-->", colored("Not Disposable ✔", "green"))
+        print("|-->", colored("Not Disposable \u2714", "green"))
 
 def printSocial(social_result):
 	print("\nSocial Media Results:")
@@ -27,7 +27,7 @@ def printLookup(lookup_result):
 def printPSB(psb_result):
     print("\nPastebin Results:")
     if len(psb_result) == 0:
-        print("|-->", colored("No Results ✘", "red"))
+        print("|-->", colored("No Results \u2718", "red"))
     else:
         for psb in psb_result:
             print("|- " + psb)
@@ -51,11 +51,11 @@ def printBreachDirectory(breach_directory_result):
             for breach in breach_directory_result["result"]:
                 results.append("|- Sources:", colored("✔", "green"))
                 for source in breach["sources"]:
-                    results.append("|-- "+source, colored("✔", "green"))
+                    results.append("|-- "+source, colored("\u2714", "green"))
                 try:
-                    results.append("|- Password: "+breach["password"], colored("✔", "green"))
-                    results.append("|- Sha1: "+breach["sha1"], colored("✔", "green"))
-                    results.append("|- Hash: "+breach["hash"], colored("✔", "green"))
+                    results.append("|- Password: "+breach["password"], colored("\u2714", "green"))
+                    results.append("|- Sha1: "+breach["sha1"], colored("\u2714", "green"))
+                    results.append("|- Hash: "+breach["hash"], colored("\u2714", "green"))
                 except KeyError:
                     pass
             results.append(colored(f"|- email found in {len(breach_directory_result['result'])} breaches", "red"))
