@@ -4,29 +4,16 @@ from footprint.utils.table import buildTable as table
 from datetime import datetime
 import os
 
-def footprintPrint(*args, **kwargs):
-    try:
-        print(*args, **kwargs)
-    except Exception:
-        printable = []
-        for arg in args:
-            printable.append(arg.encode("utf-8", "ignore").decode("utf-8"))
-        for kwarg in kwargs:
-            if kwarg == "encoding":
-                continue
-            kwargs[kwarg] = kwargs[kwarg].encode("utf-8", "ignore").decode("utf-8")
-        print(*printable, **kwargs)
-
 def printVerify(email, verified, disposable):
     print(f"Target Email:", colored(email, "red", "on_white"))
     if verified == True:
-        footprintPrint("|-->", colored("Verified \u2714", "green"))
+        print("|-->", colored("Verified ✔", "green"))
     else:
-        footprintPrint("|-->", colored("Not Verified \u2718", "red"))
+        print("|-->", colored("Not Verified ✘", "red"))
     if disposable == True:
-        footprintPrint("|-->", colored("Disposable \u2718", "red"))
+        print("|-->", colored("Disposable ✘", "red"))
     else:
-        footprintPrint("|-->", colored("Not Disposable \u2714", "green"))
+        print("|-->", colored("Not Disposable ✔", "green"))
 
 def printSocial(social_result):
 	print("\nSocial Media Results:")
@@ -40,7 +27,7 @@ def printLookup(lookup_result):
 def printPSB(psb_result):
     print("\nPastebin Results:")
     if len(psb_result) == 0:
-        footprintPrint("|-->", colored("No Results \u2718", "red"))
+        print("|-->", colored("No Results ✘", "red"))
     else:
         for psb in psb_result:
             print("|- " + psb)
@@ -62,13 +49,13 @@ def printBreachDirectory(breach_directory_result):
     try:
         if breach_directory_result != None:
             for breach in breach_directory_result["result"]:
-                results.append("|- Sources:", colored("\u2714", "green"))
+                results.append("|- Sources:", colored("✔", "green"))
                 for source in breach["sources"]:
-                    results.append("|-- "+source, colored("\u2714", "green"))
+                    results.append("|-- "+source, colored("✔", "green"))
                 try:
-                    results.append("|- Password: "+breach["password"], colored("\u2714", "green"))
-                    results.append("|- Sha1: "+breach["sha1"], colored("\u2714", "green"))
-                    results.append("|- Hash: "+breach["hash"], colored("\u2714", "green"))
+                    results.append("|- Password: "+breach["password"], colored("✔", "green"))
+                    results.append("|- Sha1: "+breach["sha1"], colored("✔", "green"))
+                    results.append("|- Hash: "+breach["hash"], colored("✔", "green"))
                 except KeyError:
                     pass
             results.append(colored(f"|- email found in {len(breach_directory_result['result'])} breaches", "red"))
@@ -85,7 +72,7 @@ def printBreachDirectory(breach_directory_result):
         print(f"Too many results to display, saved result to: {path}.")
     else:
         for result in results:
-            footprintPrint(result)
+            print(result)
 
 def printEmailRep(email_rep_result):
     print("\nEmailRep Results:")
