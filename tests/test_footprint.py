@@ -1,8 +1,8 @@
 import os
 import unittest
 
-success_exit_codes = [0, 256]
-error_exit_codes = [1]
+success_exit_codes = [0]
+error_exit_codes = [1, 256]
 
 class TestFootprint(unittest.TestCase):
     def testFootprint(self):

@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Only allow tags on main to be tested
+      - name: Only allow commits on main to be tested
         if: github.ref_name != 'main'
         run: exit 1
 
