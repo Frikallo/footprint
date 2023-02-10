@@ -4,16 +4,22 @@ from footprint.utils.table import buildTable as table
 from datetime import datetime
 import os
 
+def footprintPrint(string):
+    try:
+        print(string)
+    except UnicodeEncodeError:
+        print(string.encode("iso-8859-1"))
+
 def printVerify(email, verified, disposable):
     print(f"Target Email:", colored(email, "red", "on_white"))
     if verified == True:
-        print("|-->", colored("Verified \u2714", "green"))
+        footprintPrint("|-->", colored("Verified \u2714", "green"))
     else:
-        print("|-->", colored("Not Verified \u2718", "red"))
+        footprintPrint("|-->", colored("Not Verified \u2718", "red"))
     if disposable == True:
-        print("|-->", colored("Disposable \u2718", "red"))
+        footprintPrint("|-->", colored("Disposable \u2718", "red"))
     else:
-        print("|-->", colored("Not Disposable \u2714", "green"))
+        footprintPrint("|-->", colored("Not Disposable \u2714", "green"))
 
 def printSocial(social_result):
 	print("\nSocial Media Results:")
@@ -27,7 +33,7 @@ def printLookup(lookup_result):
 def printPSB(psb_result):
     print("\nPastebin Results:")
     if len(psb_result) == 0:
-        print("|-->", colored("No Results \u2718", "red"))
+        footprintPrint("|-->", colored("No Results \u2718", "red"))
     else:
         for psb in psb_result:
             print("|- " + psb)
@@ -64,8 +70,15 @@ def printBreachDirectory(breach_directory_result):
     except KeyError:
         print(colored("|- Error getting results, may be rate limited.", "red"))
     if len(results) >= 50:
-        path = os.path.abspath(f"./BreachDirectory({datetime.now().strftime('%m/%d/%Y_%H:%M:%S')})")
-        print(f"Too many results to display, saving result to: {path}.")
+        path = os.path.abspath(f"./BreachDirectory({datetime.now().strftime('%m/%d/%Y_%H:%M:%S')}).txt")
+        with open(path, "w", encoding="utf-8") as f:
+            for result in results:
+                f.write(result)
+        f.close()
+        print(f"Too many results to display, saved result to: {path}.")
+    else:
+        for result in results:
+            footprintPrint(result)
 
 def printEmailRep(email_rep_result):
     print("\nEmailRep Results:")

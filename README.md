@@ -45,7 +45,9 @@ pip install footprint-py
 -----------
 OR
 -----------
-pip install https://github.com/Frikallo/footprint@latest
+git clone https://github.com/Frikallo/footprint.git
+cd footprint
+python setup.py install
 ```
 
 ## Usage:
@@ -62,4 +64,4 @@ python -m footprint example@email.com
   <img src="https://github.com/Frikallo/footprint/blob/main/examples/demo.gif" width="500" title="footprint">
 </p>
 
-## License
+This project is licensed under the APACHE License - see the [LICENSE](https://github.com/Frikallo/footprint/blob/main/LICENSE) file for details
