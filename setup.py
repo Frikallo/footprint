@@ -1,8 +1,10 @@
 from io import open
 from setuptools import find_packages, setup
+from footprint import __version__ as version
+
 setup(
     name='footprint-py',
-    version='v1.3',
+    version=f'v{version}',
     url='https://github.com/Frikallo/footprint',
     license='Apache',
     author='Noah Kay',

@@ -9,12 +9,13 @@ from footprint.utils.lookup import Lookup
 from footprint.utils.printFuncs import *
 from footprint.utils.config import Config
 from footprint.utils.apis import *
+from footprint import __version__ as version
 
 ERROR_CODE = 1
 SUCCESS_CODE = 0
 
 def run():
-    printInit("footprint", "https://github.com/Frikallo/footprint", "v1.3")
+    printInit("footprint", "https://github.com/Frikallo/footprint", f"v{version}")
 
     config = Config('.conf')
     apis = ["hunter", "breachdirectory", "emailrep"]

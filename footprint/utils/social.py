@@ -23,23 +23,27 @@ def twitter(email):
 
 def instagram(email):
     r = requests.Session()
-    url = "https://www.instagram.com/accounts/account_recovery_send_ajax/"
+    url = "https://www.instagram.com/accounts/web_create_ajax/attempt/"
+    token_url = "https://www.instagram.com/api/v1/public/landing_info/"
+
+    req = r.get(token_url)
+    token = req.cookies["csrftoken"]
+
     user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36"
     r.headers = {'user-agent': user_agent}
-    r.headers.update({'X-CSRFToken': "missing"})
-    data = {"email_or_username":email}
+    r.headers.update({'x-csrftoken': token})
+    data = {"email":email}
     req = r.post(url,data=data)
-    if req.status_code == 200:
-        if req.text.find("We sent an self.email to")>=0:
-            return "Instagram \U0001f440"
-        elif req.text.find("password")>=0:
-            return "Instagram \U0001f440"
-        elif req.text.find("sent")>=0:
-            return "Instagram \U0001f440"
-        else:
-            return "Instagram [Not here!]"
-    else:
+    json_body = req.json()
+    if json_body["status"] == "fail":
         return "Instagram [Couldn't check!]"
+    if "email" not in json_body["errors"]:
+        return "Instagram [Not here!]"
+    else:
+        if json_body["errors"]["email"][0]["code"] == "invalid_email":
+            return "Instagram [Not here!]"
+        else:
+            return "Instagram \U0001f440"
 
 def spotify(email):
     r = requests.Session()
