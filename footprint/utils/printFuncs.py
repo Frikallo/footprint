@@ -11,11 +11,10 @@ def catchPrint(func):
         except UnicodeEncodeError:
             printable = [f"[{colored('UnicodeEncodeError', 'blue')}] {func.__name__} =>"]
             for arg in args:
-                printable.append(arg.encode("utf-8"))
+                printable += arg.encode("utf-8")
             for kwarg in kwargs:
-                printable.append(kwargs[kwarg].encode("utf-8"))
-            for item in printable:
-                print(item)
+                printable += kwargs[kwarg].encode("utf-8")
+            print(printable)
     return wrapper
 
 @catchPrint
