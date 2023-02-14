@@ -14,7 +14,8 @@ def catchPrint(func):
                 printable.append(arg.encode("utf-8"))
             for kwarg in kwargs:
                 printable.append(kwargs[kwarg].encode("utf-8"))
-            print(printable)
+            for item in printable:
+                print(item)
     return wrapper
 
 @catchPrint
