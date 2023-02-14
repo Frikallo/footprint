@@ -1,6 +1,4 @@
 from halo import Halo
-from multiprocessing import Process
-import dill as pickle
 import sys
 import os
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
@@ -15,15 +13,6 @@ from footprint import __version__ as version
 
 ERROR_CODE = 1
 SUCCESS_CODE = 0
-
-def run_parallel(*functions):
-    processes = []
-    for function in functions:
-        proc = Process(target=function)
-        proc.start()
-        processes.append(proc)
-    for proc in processes:
-        proc.join()
 
 def run():
     printInit("footprint", "https://github.com/Frikallo/footprint", f"v{version}")
@@ -58,12 +47,11 @@ def run():
     spinner.start()
 
     configured_apis = available_apis(apis, config)
-    rets = {}
-    run_parallel(rets.update({"ipapi": ipapi(email)}),
-                 rets.update({"psbDumps": psbDumps(email)}),
-                 rets.update({"domainRecords": Lookup(email)}),
-                 rets.update({"socials": checkSocials(email)}),
-                 rets.update({"emailVerif": validateEmail(email)}))
+    verified, disposable = validateEmail(email)
+    socials = checkSocials(email)
+    domainRecords = Lookup(email)
+    iapi = ipapi(email)
+    psbDump = psbDumps(email)
     apiResults = {}
     for configured_api in configured_apis:
         if configured_api == "emailrep":
@@ -74,17 +62,17 @@ def run():
             apiResults["breachdirectory"] = BreachDirectory(email, config.get("breachdirectory"))
     spinner.stop()
 
-    printVerify(email, rets["emailVerif"][0], rets["emailVerif"][1])
-    printSocial(rets["socials"])
+    printVerify(email, verified, disposable)
+    printSocial(socials)
     if "emailrep" in configured_apis:
         printEmailRep(apiResults["emailrep"])
     if "hunter" in configured_apis:
         printHunter(apiResults["hunter"])
     if "breachdirectory" in configured_apis:
         printBreachDirectory(apiResults["breachdirectory"])
-    printPSB(rets["psbDumps"])
-    printIPAPI(rets["ipapi"])
-    printLookup(rets["domainRecords"])
+    printPSB(psbDump)
+    printIPAPI(iapi)
+    printLookup(domainRecords)
     sys.exit(SUCCESS_CODE)
 
 if __name__ == '__main__':

@@ -115,8 +115,8 @@ def checkSocials(email):
     for social in socials:
         try:
             rets.append(social(email))
-        except:
-            rets.append(f"{social.__name__} [Error!]")
+        except Exception as e:
+            rets.append(f"{social.__name__} [Error!] {e}")
     return rets
 
 if __name__ == "__main__":

@@ -15,7 +15,7 @@ def available_apis(apis, config):
 
 def psbDumps(email):
     r = requests.Session()
-    url = "https://psbdmp.ws/api/search/" + email
+    url = "https://psbdmp.ws/api/v3/search/" + email
     r.headers = {"Accept", "application/json"}
     req = r.get(url)
     content = req.content
